@@ -205,7 +205,7 @@ sliderInput <- function(inputId, label, min, max, value, step = NULL,
     )
   }
 
-  dep <- list(
+  deps <- list(
     htmlDependency("ionrangeslider", "2.1.6", c(href="shared/ionrangeslider"),
       script = "js/ion.rangeSlider.min.js",
       # ion.rangeSlider also needs normalize.css, which is already included in
@@ -218,7 +218,28 @@ sliderInput <- function(inputId, label, min, max, value, step = NULL,
     )
   )
 
-  attachDependencies(sliderTag, dep)
+  if (hasBsTheme()) {
+    scss <- system.file(package = "shiny", "www", "shared", "ionrangeslider", "scss")
+    declarations <- if ("3" %in% bootstraplib::theme_version()) "declarations3.scss" else "declarations.scss"
+    css <- bootstraplib::bootstrap_sass(
+      list(
+        sass::sass_file(file.path(scss, declarations)),
+        sass::sass_file(file.path(scss, "rules.scss"))
+      )
+    )
+    tmpdir <- tempfile("ion-scss")
+    dir.create(tmpdir)
+    writeLines(css, file.path(tmpdir, "slider-custom.css"))
+    deps <- c(
+      deps,
+      list(htmlDependency(
+        "ionrangeslider-skin", "2.1.6", tmpdir,
+        stylesheet = "slider-custom.css"
+      ))
+    )
+  }
+
+  attachDependencies(sliderTag, deps)
 }
 
 hasDecimals <- function(value) {

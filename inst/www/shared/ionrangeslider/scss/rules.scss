@@ -1,0 +1,78 @@
+/*
+* Overrides for https://github.com/rstudio/shiny/blob/master/inst/www/shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css
+*/
+
+// BS3 doesn't have a notion of border-width
+$border-width: 1px !default;
+
+.irs-line {
+  background: mix($slider-bg, $slider-fg, 6.7%);
+  // TODO: what does this do?
+  background: linear-gradient(to bottom, #DDD -50%, $slider-bg 150%); /* W3C */
+  // TODO: should this use the Bootstrap mixin?
+  border: $border-width solid mix($slider-bg, $slider-fg, 20%);
+  border-radius: $border-radius;
+  -moz-border-radius: $border-radius;
+}
+
+.irs-bar {
+  border-top: $border-width solid $slider-accent;
+  border-bottom: $border-width solid $slider-accent;
+  background: $slider-accent;
+}
+.irs-bar-edge {
+  border: $border-width solid $slider-accent;
+  background: $slider-accent;
+  border-radius: $border-radius 0 0 $border-radius;
+  -moz-border-radius: $border-radius 0 0 $border-radius;
+}
+
+.irs-shadow {
+  background: $slider-fg;
+  border-radius: $border-radius / 3;
+  -moz-border-radius: $border-radius / 3;
+}
+
+.irs-slider {
+  border: $border-width solid mix($slider-bg, $slider-fg, 33.3%);
+  background: mix($slider-bg, $slider-fg, 13.3%);
+  border-radius: $border-radius * 1.5;
+  -moz-border-radius: $border-radius * 1.5;
+  box-shadow: 1px 1px 3px mix($slider-bg, $slider-fg, 30%);
+}
+
+#irs-active-slider, .irs-slider:hover {
+  background: $slider-bg;
+}
+
+.irs-min, .irs-max {
+  color: mix($slider-bg, $slider-fg, 80%);
+  background: mix($slider-bg, $slider-fg, 10%);
+  border-radius: $border-radius / 4;
+  -moz-border-radius: $border-radius / 4;
+}
+
+.lt-ie9 .irs-min, .lt-ie9 .irs-max {
+  background: mix($slider-bg, $slider-fg, 20%);
+}
+
+.irs-from, .irs-to, .irs-single {
+  color: $slider-bg;
+  background: $slider-accent;
+}
+
+.lt-ie9 .irs-from, .lt-ie9 .irs-to, .lt-ie9 .irs-single {
+  background: mix($slider-bg, $slider-fg, 40%);
+}
+
+.irs-grid-pol {
+  background: $slider-accent;
+}
+
+.irs-grid-pol.small {
+  background: mix($slider-bg, $slider-fg, 40%);
+}
+
+.irs-grid-text {
+  color: mix($slider-accent, $slider-fg, 20%);
+}
