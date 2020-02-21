@@ -42,8 +42,13 @@ bootstrapPage <- function(..., title = NULL, responsive = NULL, theme = NULL) {
       # remainder of tags passed to the function
       list(...)
     ),
-    bootstrapLib()
+    if (hasBsTheme()) bootstraplib::bootstrap() else bootstrapLib()
   )
+}
+
+hasBsTheme <- function() {
+  if (system.file(package = "bootstraplib") == "") return(FALSE)
+  !is.null(bootstraplib::bs_theme_get())
 }
 
 #' Bootstrap libraries

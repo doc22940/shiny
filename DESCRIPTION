@@ -93,9 +93,11 @@ Suggests:
     shinytest,
     yaml,
     future,
-    dygraphs
+    dygraphs,
+    bootstraplib
 Remotes:
-    rstudio/htmltools
+    rstudio/htmltools,
+    rstudio/bootstraplib
 URL: http://shiny.rstudio.com
 BugReports: https://github.com/rstudio/shiny/issues
 Collate:
