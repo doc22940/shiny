@@ -203,6 +203,29 @@ selectizeIt <- function(inputId, select, options, nonempty = FALSE) {
     ))
   }
 
+  # Compile selectize Sass against a bootstraplib theme (if one exists)
+  if (hasBsTheme()) {
+    scss <- system.file(package = "shiny", "www", "shared", "selectize", "scss")
+    scss <- if ("3" %in% bootstraplib::theme_version()) {
+      file.path(scss, "selectize.bootstrap3.scss")
+    } else {
+      file.path(scss, "selectize.bootstrap4.scss")
+    }
+    # selectize.bootstrap4.scss uses a mixin (nav-divider) which will be deprecated in BS5,
+    # so a warning is emitted, but that warning isn't very useful for users...
+    #suppressDeprecation <- sass::sass_layer(defaults = "$enable-deprecation-messages: false !default")
+    #theme <- sass::sass_layer_merge(bs_theme_get(), suppressDeprecation)
+    css <- bootstraplib::bootstrap_sass(sass::sass_file(scss))
+    tmpdir <- tempfile("selectize-custom")
+    dir.create(tmpdir)
+    writeLines(css, file.path(tmpdir, "selectize-custom.css"))
+    selectizeDep <- htmlDependency(
+      "selectize", "0.11.2", tmpdir,
+      stylesheet = "selectize-custom.css",
+      head = format(tags$script(src = 'shared/selectize/js/selectize.min.js'))
+    )
+  }
+
   # Insert script on same level as <select> tag
   select$children[[2]] <- tagAppendChild(
     select$children[[2]],
